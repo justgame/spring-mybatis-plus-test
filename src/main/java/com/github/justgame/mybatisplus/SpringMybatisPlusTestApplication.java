@@ -9,5 +9,4 @@ public class SpringMybatisPlusTestApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringMybatisPlusTestApplication.class, args);
     }
-
 }
