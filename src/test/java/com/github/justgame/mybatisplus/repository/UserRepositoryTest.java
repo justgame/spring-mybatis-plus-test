@@ -40,4 +40,10 @@ class UserRepositoryTest {
         user.setId(1L).setName("testtesttest").setAge(111);
         userRepository.update(user, Wrappers.<User>lambdaUpdate().set(User::getSex, null).eq(User::getId, user.getId()));
     }
+
+    @Test
+    void testGetOne() {
+        User user = userRepository.selectOne(Wrappers.query(new User().setName("test")));
+        System.out.println(user);
+    }
 }
