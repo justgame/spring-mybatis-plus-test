@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.justgame.mybatisplus.model.User;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -50,5 +51,17 @@ class UserRepositoryTest {
     @Test
     void testInsertCustom() {
         userRepository.insertCustom("test insert custom", 18, "test insert custom", 0);
+    }
+
+    @Test
+    void testDuplicateKey() {
+        User user = new User();
+        user.setName("xcl").setSex(1).setAge(18).setDescription("test duplicate key");
+        userRepository.insert(user);
+
+        User user2 = new User();
+        BeanUtils.copyProperties(user, user2);
+        userRepository.insert(user2);
+        // 出现DuplicateKeyException
     }
 }
