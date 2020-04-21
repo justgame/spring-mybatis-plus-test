@@ -46,4 +46,9 @@ class UserRepositoryTest {
         User user = userRepository.selectOne(Wrappers.query(new User().setName("test")));
         System.out.println(user);
     }
+
+    @Test
+    void testInsertCustom() {
+        userRepository.insertCustom("test insert custom", 18, "test insert custom", 0);
+    }
 }
