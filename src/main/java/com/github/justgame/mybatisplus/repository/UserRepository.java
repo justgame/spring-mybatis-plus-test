@@ -12,5 +12,8 @@ import org.apache.ibatis.annotations.Options;
 public interface UserRepository extends BaseMapper<User> {
     @Insert("insert into user (name, age, sex, description) values (#{name}, #{age}, #{sex}, #{description})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    Integer customInsert(User user);
+    Integer optionsInsert(User user);
+
+    @Insert("insert into user (name, age, sex, description) values (#{name}, #{age}, #{sex}, #{description})")
+    void insertCustom(String name, Integer age, String description, Integer sex);
 }

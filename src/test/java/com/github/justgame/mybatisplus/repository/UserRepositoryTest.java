@@ -49,6 +49,11 @@ class UserRepositoryTest {
     }
 
     @Test
+    void testInsertCustom() {
+        userRepository.insertCustom("test insert custom", 18, "test insert custom", 0);
+    }
+
+    @Test
     void testDuplicateKey() {
         User user = new User();
         user.setName("xcl").setSex(1).setAge(18).setDescription("test duplicate key");
@@ -61,11 +66,11 @@ class UserRepositoryTest {
     }
 
     @Test
-    void testCustomInsert() {
+    void testOptionsInsert() {
         // 此方法得出使用mybatis的@Options注解，可以实现将自增id设置回参数对象中
         User user = new User();
         user.setName("11").setSex(0).setAge(17).setDescription("test insert with options annotation");
-        System.out.println(userRepository.customInsert(user));
+        System.out.println(userRepository.optionsInsert(user));
         System.out.println(user.getId());
     }
 }
