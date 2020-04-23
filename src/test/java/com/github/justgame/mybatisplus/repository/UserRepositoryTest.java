@@ -59,4 +59,13 @@ class UserRepositoryTest {
         userRepository.insert(user2);
         // 出现DuplicateKeyException
     }
+
+    @Test
+    void testCustomInsert() {
+        // 此方法得出使用mybatis的@Options注解，可以实现将自增id设置回参数对象中
+        User user = new User();
+        user.setName("11").setSex(0).setAge(17).setDescription("test insert with options annotation");
+        System.out.println(userRepository.customInsert(user));
+        System.out.println(user.getId());
+    }
 }
