@@ -49,8 +49,8 @@ class UserRepositoryTest {
     }
 
     @Test
-    void testInsertCustom() {
-        userRepository.insertCustom("test insert custom", 18, "test insert custom", 0);
+    void testCustomInsert() {
+        userRepository.customInsert("test insert custom", 18, "test insert custom", 0);
     }
 
     @Test
@@ -72,5 +72,12 @@ class UserRepositoryTest {
         user.setName("11").setSex(0).setAge(17).setDescription("test insert with options annotation");
         System.out.println(userRepository.optionsInsert(user));
         System.out.println(user.getId());
+    }
+
+    @Test
+    void testSelectBySelective() {
+        User user = new User();
+        user.setName("xcl").setAge(18);
+        System.out.println(userRepository.selectBySelective(user));
     }
 }

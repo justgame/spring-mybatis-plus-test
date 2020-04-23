@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.justgame.mybatisplus.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.jdbc.SQL;
+
+import java.util.List;
 
 /**
  * @author xcl
@@ -15,5 +19,32 @@ public interface UserRepository extends BaseMapper<User> {
     Integer optionsInsert(User user);
 
     @Insert("insert into user (name, age, sex, description) values (#{name}, #{age}, #{sex}, #{description})")
-    void insertCustom(String name, Integer age, String description, Integer sex);
+    void customInsert(String name, Integer age, String description, Integer sex);
+
+    @SelectProvider(type = SqlProvider.class, method = "selectBySelective")
+    List<User> selectBySelective(User user);
+
+    class SqlProvider {
+        public static String selectBySelective(User user) {
+            return new SQL() {{
+                SELECT("*");
+                FROM("user");
+                if (user.getId() != null) {
+                    WHERE("id = #{id}");
+                }
+                if (user.getName() != null) {
+                    WHERE("name like #{name}");
+                }
+                if (user.getSex() != null) {
+                    WHERE("sex = #{sex}");
+                }
+                if (user.getAge() != null) {
+                    WHERE("age = #{age}");
+                }
+                if (user.getDescription() != null) {
+                    WHERE("description = #{description}");
+                }
+            }}.toString();
+        }
+    }
 }
