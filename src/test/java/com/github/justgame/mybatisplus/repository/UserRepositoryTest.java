@@ -80,4 +80,8 @@ class UserRepositoryTest {
         user.setName("xcl").setAge(18);
         System.out.println(userRepository.selectBySelective(user));
     }
+
+    @Test
+    void testBatchInsert() {
+    }
 }
