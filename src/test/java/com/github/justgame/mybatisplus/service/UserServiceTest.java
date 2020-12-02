@@ -19,9 +19,9 @@ class UserServiceTest {
 
     @Test
     void testBatchSave() {
-        User user1 = new User().setName("1").setSex(1);
-        User user2 = new User().setName("2").setSex(2);
-        User user3 = new User().setName("3").setSex(3);
+        User user1 = new User().setName("a");
+        User user2 = new User().setName("b").setAge(7);
+        User user3 = new User().setName("c");
 
         userService.saveBatch(Lists.newArrayList(user1, user2, user3));
     }

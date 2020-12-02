@@ -8,6 +8,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -83,5 +86,13 @@ class UserRepositoryTest {
 
     @Test
     void testBatchInsert() {
+
+    }
+
+    @Test
+    void testInsert() {
+        User user = new User();
+        user.setName("xixi");
+        userRepository.insert(user);
     }
 }
