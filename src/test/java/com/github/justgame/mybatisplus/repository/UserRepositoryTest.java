@@ -3,11 +3,16 @@ package com.github.justgame.mybatisplus.repository;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.justgame.mybatisplus.model.User;
+import org.apache.ibatis.cursor.Cursor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @Test
     void myFirstTest() {
@@ -94,5 +102,20 @@ class UserRepositoryTest {
         User user = new User();
         user.setName("xixi");
         userRepository.insert(user);
+    }
+
+    @Test
+    void testSelectAllStream() {
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.execute(status -> {
+            try (Cursor<User> cursor = userRepository.selectAllStream()) {
+                for (User user : cursor) {
+                    System.out.println(user);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        });
     }
 }
